@@ -4,16 +4,22 @@ import { fifaData } from './fifa.js';
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 1: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Practice accessing data by console.log-ing the following pieces of data note, you may want to filter the data first 😉*/
+const filteredFifaData = fifaData.filter(game => game.Year === 2014 && game.Stage === "Final");
 
 //(a) Home Team name for 2014 world cup final
+console.log(filteredFifaData[0]["Home Team Name"]);
 
 //(b) Away Team name for 2014 world cup final
+console.log(filteredFifaData[0]["Away Team Name"]);
 
 //(c) Home Team goals for 2014 world cup final
+console.log(filteredFifaData[0]["Home Team Goals"]);
 
 //(d) Away Team goals for 2014 world cup final
+console.log(filteredFifaData[0]["Away Team Goals"]);
 
 //(e) Winner of 2014 world cup final */
+console.log(filteredFifaData[0]["Home Team Name"]);
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 2: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -24,8 +30,9 @@ Use getFinals to do the following:
 hint - you should be looking at the stage key inside of the objects
 */
 
-function getFinals(/* code here */) {
-   /* code here */
+function getFinals(data) {
+  let allFinals =  data.filter(game => game.Stage === "Final");
+  return allFinals;
 }
 
 
@@ -36,10 +43,15 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function getFinals from task 2 
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(/* code here */) {
-    /* code here */
-}
-
+const getYears = (arr, callback) => {
+    // empty array for years
+    let yearsArray = [];
+    // loop through results of callback
+    for(let i = 0; i < callback(arr).length; i++){
+     yearsArray.push(callback(arr)[i].Year); 
+    }    
+      return yearsArray;
+  }
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -49,9 +61,23 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(/* code here */) {
-    /* code here */
-}
+function getWinners(arr, cb){
+    // create empty array for results
+    let winners = [];
+    // forEach loop through results of cb
+    cb(arr).forEach(game => {
+      // compare goals and select winner
+      if(game["Home Team Goals"] > game["Away Team Goals"]){
+        // push home team name if they are the winner
+        winners.push(game["Home Team Name"]);
+      }else if(game["Away Team Goals"] > game["Home Team Goals"]){
+        // push away team name if they are the winner
+        winners.push(game["Away Team Name"]);
+      }
+    })
+    // return array of winners
+    return winners;
+  }
 
 
 
